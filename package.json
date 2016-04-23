@@ -1,0 +1,38 @@
+{
+  "name": "socket-example",
+  "version": "0.0.0",
+  "description": "Socket.io RxJS example",
+  "main": "server/main.js",
+  "scripts": {
+    "start": "cross-env NODE_ENV=dev concurrent -k \"npm run dev:client\" \"npm run dev:server\"",
+    "dev:client": "webpack -d -w",
+    "dev:server": "nodemon --ignore dist/ --ignore client/'",
+    "build": "webpack -p",
+    "prod": "node ."
+  },
+  "author": "Tomas Trajan<tomas.trajan@gmail.com>",
+  "license": "MIT",
+  "babel": {
+    "presets": [
+      "es2015"
+    ]
+  },
+  "dependencies": {
+    "babel": "^6.5.2",
+    "babel-loader": "^6.2.4",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-register": "^6.7.2",
+    "body-parser": "^1.15.0",
+    "cross-env": "^1.0.7",
+    "express": "^4.13.4",
+    "html-webpack-plugin": "^2.16.0",
+    "rxjs": "^5.0.0-beta.6",
+    "socket.io": "^1.4.5"
+  },
+  "devDependencies": {
+    "clean-webpack-plugin": "^0.1.8",
+    "concurrently": "^2.0.0",
+    "webpack": "^1.13.0",
+    "webpack-html-plugin": "^0.1.1"
+  }
+}
