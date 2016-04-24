@@ -1,6 +1,7 @@
 const path = require("path") ;
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 
 const DEV = (process.env.NODE_ENV || "production") === "dev";
 
@@ -12,12 +13,16 @@ const CONFIG = {
     },
     module: {
         loaders: [
-            { test: /\.js/, loader: "babel-loader" }
+            { test: /\.js/, loader: "babel" },
+            { test: /\.scss/, loader: ExtractTextPlugin.extract("css!sass") }
         ]
     },
     plugins: [
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, "./client/index.html")
+        }),
+        new ExtractTextPlugin("bundle.css", {
+            allChunks: true
         })
     ].concat(DEV ? [
         // dev only
