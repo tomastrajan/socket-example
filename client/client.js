@@ -1,5 +1,7 @@
 import {Observable} from "rxjs";
 
+import Resource from "./resource";
+
 import "./style.scss";
 
 window.onload = () => {
@@ -9,9 +11,10 @@ window.onload = () => {
 
     socket.on("message", msg => $(".chat ul").append($("<li>").text(msg)));
 
-
     $(".chat button").click(() => {
-        socket.emit("message", $(".chat input").val());
+        const msg = $(".chat input").val();
+        socket.emit("message", msg);
+        $(".chat ul").append($("<li>").text(msg));
         $(".chat input").val("");
     });
 
@@ -34,7 +37,7 @@ window.onload = () => {
             // and much much more
             .subscribe(data => {
                 console.log("Subscription received value after filtering", data.value);
-                $(".subval").text(data.value)
+                $(".subval").text(data.value);
             });
     });
 
@@ -43,5 +46,22 @@ window.onload = () => {
             socket.emit("unsubscribe", { type});
             subscribtion.unsubscribe();
         }
+    });
+
+
+    const Users = new Resource(socket, "users");
+    
+    $("button.find").click(() => {
+        Users.find(1, res => {
+            $(".resource-response").text(JSON.stringify(res));
+            console.log(res)
+        });
+    });
+
+    $("button.findall").click(() => {
+        Users.findAll(res => {
+            $(".resource-response").text(JSON.stringify(res));
+            console.log(res)
+        });
     });
 };
